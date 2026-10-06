@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Temas de Estudio{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Temas de Diego y Ariel</h2>
+
+<div class="row">
+    <!-- Verificamos si hay data con IF -->
+    {% if lista_elementos %}
+        <!-- Iteramos los temas con FOR -->
+        {% for item in lista_elementos %}
+        <div class="col-md-6 mb-4">
+            <!-- Uso de Cards de Bootstrap -->
+            <div class="card h-100 shadow">
+                
+                <!-- Carrusel de Bootstrap para las 2 imágenes -->
+                <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for imagen in item.imagenes %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{% static imagen %}" class="d-block w-100" alt="Imagen del tema" style="height: 300px; object-fit: cover;">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.nombre }}</h5>
+                    <p class="card-text">{{ item.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
